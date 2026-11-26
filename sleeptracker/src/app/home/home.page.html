@@ -1,20 +1,75 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Sleep Tracker
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="welcome-msg">
+    <strong>{{currentDayPeriod()}}, {{name}}</strong>
   </div>
+  <div class="last-session-msg">
+    <p>In your last session, you slept for: placeholder.</p>
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>How many hours did you sleep?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Press <strong>Submit</strong> when you're all done.
+      <br>
+      <div class="dt1">
+        <strong>Time you went to sleep:</strong>
+        <ion-datetime-button datetime="datetime1"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime1" presentation="date-time" preferWheel="true"
+                          (ionChange)="setDatetime1($event)"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+      <br>
+      <div class="dt2">
+        <strong>Time you became awake:</strong>
+        <ion-datetime-button datetime="datetime2"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime2" presentation="date-time" preferWheel="true"
+                          (ionChange)="setDatetime2($event)"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </ion-card-content>
+    <div class="submit-overnight-log">
+      <ion-button fill="solid" (click)="saveOvernightData()">
+        <ion-icon name="arrow-up-circle"></ion-icon>
+        Submit
+      </ion-button>
+    </div>
+  </ion-card>
+  <br>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>How sleepy do you feel?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Your sleepiness is at a {{sleepiness}}
+      <br>
+      <ion-range aria-label="Sleep quality range" [ticks]=true [snaps]="true" [min]=0 [max]=7 [pin]="true" (ionChange)="setSleepiness($event)"></ion-range>
+      <div class="submit-sleepiness-log">
+      <ion-button fill="solid" (click)="saveSleepinessData()">
+        <ion-icon name="arrow-up-circle"></ion-icon>
+        Submit
+      </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>
